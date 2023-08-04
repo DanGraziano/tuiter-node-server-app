@@ -39,9 +39,16 @@ const AuthController = (app) => {
         req.session.destroy();
         res.sendStatus(200);
       };
-
       
- const update   = (req, res) => { };
+      const update = (req, res) => {
+        const username = req.body.username;
+        const user = usersDao.findUserByUsername(username);
+        const newUser = usersDao.updateUser(req.body);
+        req.session["currentUser"] = newUser;
+        res.json(newUser);
+    };
+
+
  app.post("/api/users/register", register);
  app.post("/api/users/login",    login);
  app.post("/api/users/profile",  profile);
@@ -49,3 +56,5 @@ const AuthController = (app) => {
  app.put ("/api/users",          update);
 };
 export default AuthController;
+
+
