@@ -20,6 +20,7 @@ const AuthController = (app) => {
         const username = req.body.username;
         const password = req.body.password;
         const user = usersDao.findUserByCredentials(username, password);
+        console.log(user);
         if (user) {
           req.session["currentUser"] = user;
           currentUser2 = user;
@@ -31,8 +32,8 @@ const AuthController = (app) => {
 
       
       const profile = (req, res) => {
-        const currentUser = req.session["currentUser"];
-        currentUser = currentUser2;
+        //const currentUser = req.session["currentUser"];
+        const currentUser = currentUser2;
         if (!currentUser) {
           res.sendStatus(404);
           return;
@@ -47,8 +48,8 @@ const AuthController = (app) => {
       
       
     const update = (req, res) => {
-      const currentUser = req.session['currentUser'];
-      currentUser = currentUser2;
+      //const currentUser = req.session['currentUser'];
+      const currentUser = currentUser2;
       if (!currentUser) {
         res.sendStatus(404);
         return;
@@ -56,6 +57,7 @@ const AuthController = (app) => {
       const status = usersDao.updateUser(currentUser._id, req.body);
       //req.session['currentUser'] = usersDao.findUserById(currentUser._id);
       currentUser2 = usersDao.findUserById(currentUser._id);
+      console.log(currentUser2);
       res.json(status);
     };
   
@@ -65,7 +67,7 @@ const AuthController = (app) => {
  app.post("/api/users/login", login);
  app.post("/api/users/profile", profile);
  app.post("/api/users/logout", logout);
- app.put ("/api/users", update);
+ app.put ("/api/users/:uid", update);
 };
 export default AuthController;
 
