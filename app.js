@@ -11,7 +11,7 @@ const app = express();
 app.use(cors
     ({
         credentials: true,
-        origin: process.env.FRONTEND_URL
+        origin: ["http://localhost:3000", "https://a5--melodic-phoenix-3b3d79.netlify.app"]
     })
 );
 const sessionOptions = {
