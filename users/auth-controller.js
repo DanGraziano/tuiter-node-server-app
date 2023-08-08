@@ -41,25 +41,24 @@ const AuthController = (app) => {
       };
       
       
-    const update = async (req, res) => {
-      const username = req.body.username;
-      const user = usersDao.findUserByUsername(username);
-      if (!user) {
+    const update = (req, res) => {
+      const currentUser = req.session['currentUser'];
+      if (!currentUser) {
         res.sendStatus(404);
         return;
       }
-      const newUser = await usersDao.updateUser(req.body);
-      req.session["currentUser"] = newUser;
-      res.json(newUser);
+      const status = usersDao.updateUser(currentUser._id, req.body);
+      req.session['currentUser'] = usersDao.findUserById(currentUser._id);
+      res.json(status);
     };
   
 
 
  app.post("/api/users/register", register);
- app.post("/api/users/login",    login);
- app.post("/api/users/profile",  profile);
- app.post("/api/users/logout",   logout);
- app.put ("/api/users",          update);
+ app.post("/api/users/login", login);
+ app.post("/api/users/profile", profile);
+ app.post("/api/users/logout", logout);
+ app.put ("/api/users", update);
 };
 export default AuthController;
 
