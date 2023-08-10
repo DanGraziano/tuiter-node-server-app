@@ -1,15 +1,13 @@
 import * as usersDao from "./users-dao.js";
 
-let currentUser2;
-
 const AuthController = (app) => {
   const register = async (req, res) => {
     const user = await usersDao.findUserByUsername(req.body.username);
     if (user) {
       res.sendStatus(403);
-      return;
+      return; 
     }
-    const newUser = await userDao.createUser(req.body);
+    const newUser = await usersDao.createUser(req.body);
     req.session["currentUser"] = newUser;
     res.json(newUser);
   };
@@ -45,16 +43,14 @@ const AuthController = (app) => {
       };
       
       
-    const update = (req, res) => {
-      const currentUser = req.session['currentUser'];
-      if (!currentUser) {
-        res.sendStatus(404);
-        return;
-      }
-      const status = usersDao.updateUser(currentUser._id, req.body);
-      currentUser2 = usersDao.findUserById(currentUser._id);
-      console.log(currentUser2);
-      res.json(status);
+    const update = async (req, res) => {
+      console.log('update', req.body)
+      const id = req.params.uid;
+      console.log(id, req.body);
+      const newUser = await usersDao.updateUser(id,req.body.user);
+      console.log(newUser);
+      req.session["currentUser"] = newUser;
+      res.json(newUser);
     };
   
 
@@ -62,7 +58,7 @@ const AuthController = (app) => {
  app.post("/api/users/login", login);
  app.post("/api/users/profile", profile);
  app.post("/api/users/logout", logout);
- app.put ("/api/users/:uid", update);
+ app.put ("/api/users/update/:uid",   update);
 };
 export default AuthController;
 
