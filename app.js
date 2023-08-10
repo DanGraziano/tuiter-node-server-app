@@ -10,7 +10,7 @@ import mongoose from "mongoose";
 
 //mongoose.connect("mongodb://127.0.0.1:27017/tuiter");
 
-const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || "mongodb://127.0.0.1:27017/tuiter";
+const CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
 mongoose.connect(CONNECTION_STRING);
 
 
@@ -18,7 +18,7 @@ const app = express();
 app.use(cors
     ({
         credentials: true,
-        origin: ["http://localhost:3000", "https://a5--melodic-phoenix-3b3d79.netlify.app"]
+        origin: ["http://localhost:3000", "https://a6--melodic-phoenix-3b3d79.netlify.app"]
     })
 );
 const sessionOptions = {
