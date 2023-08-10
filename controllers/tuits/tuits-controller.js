@@ -1,6 +1,5 @@
 import * as tuitsDao from './tuits-dao.js'
 
-
 const createTuit = async (req, res) => {
   const newTuit = req.body;
   newTuit.likes = 0;
@@ -12,7 +11,7 @@ const createTuit = async (req, res) => {
   newTuit.dislikes = 0;
   newTuit.handle = "@nasa";
   newTuit.userName = "NASA";
-  newTuit.image = "/images/NASA_logo.png";
+  newTuit.image = "../images/NASA_logo.png";
   const insertedTuit = await tuitsDao.createTuit(newTuit);
   res.json(insertedTuit);
 }
@@ -25,7 +24,7 @@ const findTuits = async (req, res) => {
 const updateTuit = async (req, res) => {
   const tuitdId = req.params.tid;
   const updates = req.body;
-  const status = await tuitsDao.updateTuit(tuitdIdToUpdate, updates);
+  const status = await tuitsDao.updateTuit(tuitdId, updates);
   res.json(status);
 }
   
