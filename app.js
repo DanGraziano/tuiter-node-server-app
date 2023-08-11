@@ -8,17 +8,8 @@ import session from "express-session";
 import AuthController from "./users/auth-controller.js";
 import mongoose from "mongoose";
 
-mongoose.connect("mongodb://127.0.0.1:27017/tuiter");
-
-/*
-const CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
-mongoose.connect(CONNECTION_STRING, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false
-});
-*/
+const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || "mongodb://localhost:27017/tuiter";
+mongoose.connect(CONNECTION_STRING);
 
 const app = express();
 app.use(cors
